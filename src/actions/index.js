@@ -1,6 +1,6 @@
 export const ADD_IMAGE = 'ADD_IMAGE'
 
-export const addImage = id => ({
+export const addImage = image => ({
     type: 'ADD_IMAGE',
-    id
+    image
 })
