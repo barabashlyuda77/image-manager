@@ -1,7 +1,9 @@
-export const rootReducer = (state = [], action) => {
+const initialState = []
+
+export const rootReducer = (state = initialState, action) => {
     switch (action.type) {
-      case 'ADD_TODO':
-        return state
+      case 'SET_IMAGE_LIST':
+        return action.payload.imageList
       default:
         return state
     }
