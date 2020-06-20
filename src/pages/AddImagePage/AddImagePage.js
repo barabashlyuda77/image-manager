@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import {
-  Link
+  Link, useHistory
 } from 'react-router-dom';
 import './AddImagePage.css';
 import { addImage } from '../../actions';
@@ -14,6 +14,7 @@ const AddImagePage = () => {
   const [tooltipColor, setTooltipColor] = useState(TooltipColor.black)
   
   const dispatch = useDispatch()
+  const history = useHistory()
   const uploadFileHandler = useCallback((event) => {
     const file = event.target.files[0]
     const reader = new FileReader();
@@ -45,7 +46,8 @@ const AddImagePage = () => {
 
   const cancelHandler = useCallback((event) => {
     // return to home page
-  }, [])
+    history.push('/')
+  }, [history])
 
   const submitHandler = () => {
     const newImage = {
@@ -56,6 +58,7 @@ const AddImagePage = () => {
     }
     console.log(newImage)
     dispatch(addImage(newImage))
+    history.push('/')
   }
 
   return (

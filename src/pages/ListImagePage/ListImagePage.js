@@ -17,10 +17,12 @@ const ListImagePage = () => {
     dispatch(removeImage(imageId))
   }
 
-  console.log('imageList', imageList);
   return (
     <>
       <div>ListImagePage</div>
+      <div className="add-image-button">
+        <Link to="/add">Add Image</Link>
+      </div>
       <div className="gridview">
         <div className="gridview-header">Image</div>
         <div className="gridview-header">Actions</div>
