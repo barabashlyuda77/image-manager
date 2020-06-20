@@ -33,3 +33,24 @@ export const apiRemoveImage = imageId => {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newImageList))
     return newImageList
 }
+
+export const apiReplaceImage = (imageId, { image, tooltipText, tooltipPosition, tooltipColor }) => {
+    /* eslint-disable no-console */
+    console.log('data', imageId, image);
+
+    const newImageList = apiGetImageList()
+        .map(item => {
+            return item.id !== imageId
+                ? item
+                : {
+                    id: imageId,
+                    image,
+                    tooltipText,
+                    tooltipPosition,
+                    tooltipColor
+                }
+        })
+    
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newImageList))
+    return newImageList
+}

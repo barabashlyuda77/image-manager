@@ -7,6 +7,7 @@ import { getImageList, removeImage } from '../../actions';
 
 const ListImagePage = () => {
   const imageList = useSelector(imageListSelector)
+  console.log('imageList', imageList)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -29,7 +30,9 @@ const ListImagePage = () => {
         {imageList.map(({ id, image }) => (
           <>
             <div className="gridview-image-container">
-              <img key={id} data-id={id} src={image.contents} alt="" height="100" />
+              <Link to={`/edit/${id}`}>
+                <img key={id} data-id={id} src={image.contents} alt="" height="100" />
+              </Link>
             </div>
             <div>
               <button onClick={() => removeImageHandler(id)}>Remove</button>

@@ -22,7 +22,7 @@ const App = () => {
             <AddImagePage />
           </Route>
           <Route path="/edit/:id">
-            <EditImagePage />
+            <AddImagePage />
           </Route>
           <Route path="/view/:id">
             <ViewImagePage />

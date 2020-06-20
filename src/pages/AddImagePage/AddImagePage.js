@@ -1,20 +1,26 @@
 import React, { useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-  Link, useHistory
+  Link, useHistory, useParams
 } from 'react-router-dom';
 import './AddImagePage.css';
-import { addImage } from '../../actions';
+import { addImage, updateImage } from '../../actions';
 import { TooltipPosition, TooltipColor } from '../../helpers';
+import { imageListSelector } from '../../selectors';
 
 const AddImagePage = () => {
-  const [image, setImage] = useState(null)
-  const [tooltipText, setTooltipText] = useState('')
-  const [tooltipPosition, setTooltipPosition] = useState(TooltipPosition.top)
-  const [tooltipColor, setTooltipColor] = useState(TooltipColor.black)
+  const { id: imageId } = useParams();
+  const imageList = useSelector(imageListSelector)
+  const selectedImage = imageList.find(image => image.id === imageId) || {}
+
+  const [image, setImage] = useState(selectedImage.image)
+  const [tooltipText, setTooltipText] = useState(selectedImage.tooltipText || '')
+  const [tooltipPosition, setTooltipPosition] = useState(selectedImage.tooltipPosition || TooltipPosition.top)
+  const [tooltipColor, setTooltipColor] = useState(selectedImage.tooltipColor || TooltipColor.black)
   
   const dispatch = useDispatch()
   const history = useHistory()
+
   const uploadFileHandler = useCallback((event) => {
     const file = event.target.files[0]
     const reader = new FileReader();
@@ -57,7 +63,11 @@ const AddImagePage = () => {
       tooltipColor,
     }
     console.log(newImage)
-    dispatch(addImage(newImage))
+    if (imageId) {
+      dispatch(updateImage(imageId, newImage))
+    } else {
+      dispatch(addImage(newImage))
+    }
     history.push('/')
   }
 
@@ -65,14 +75,20 @@ const AddImagePage = () => {
     <>
       <div>AddImagePage</div>
       <form>
-        <input type="file" onChange={uploadFileHandler} required />
-        <input type="text" onChange={tooltipTextHandler} />
-        <select onChange={tooltipPositionHandler}>
+        {imageId ? (
+          <div className="edit-image">
+            <img src={image.contents} alt="" height="400" />
+          </div>
+        ) : (
+          <input type="file" onChange={uploadFileHandler} required />
+        )}
+        <input type="text" value={tooltipText} onChange={tooltipTextHandler} />
+        <select value={tooltipPosition} onChange={tooltipPositionHandler}>
           {Object.values(TooltipPosition).map(
             value => <option key={value} value={value}>{value}</option>
           )}
         </select>
-        <select onChange={tooltipColorHandler}>
+        <select value={tooltipColor} onChange={tooltipColorHandler}>
           {Object.values(TooltipColor).map(
             value => <option key={value} value={value}>{value}</option>
           )}
