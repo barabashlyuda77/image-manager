@@ -30,7 +30,7 @@ const ListImagePage = () => {
         {imageList.map(({ id, image }) => (
           <>
             <div className="gridview-image-container">
-              <Link to={`/edit/${id}`}>
+              <Link to={`/view/${id}`}>
                 <img key={id} data-id={id} src={image.contents} alt="" height="100" />
               </Link>
             </div>

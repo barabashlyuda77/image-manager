@@ -51,9 +51,9 @@ const AddImagePage = () => {
   }, [setTooltipColor])
 
   const cancelHandler = useCallback((event) => {
-    // return to home page
-    history.push('/')
-  }, [history])
+    const location = imageId ? `/view/${imageId}` : '/'
+    history.push(location)
+  }, [history, imageId])
 
   const submitHandler = () => {
     const newImage = {
@@ -68,12 +68,17 @@ const AddImagePage = () => {
     } else {
       dispatch(addImage(newImage))
     }
-    history.push('/')
+    const location = imageId ? `/view/${imageId}` : '/'
+    history.push(location)
   }
 
   return (
     <>
-      <div>AddImagePage</div>
+      {imageId ? (
+        <div>EditImagePage</div>
+      ) : (
+        <div>AddImagePage</div>
+      )}
       <form>
         {imageId ? (
           <div className="edit-image">
