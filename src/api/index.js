@@ -31,4 +31,5 @@ export const apiRemoveImage = imageId => {
     const newImageList = imageList
         .filter(image => image.id !== imageId)
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newImageList))
+    return newImageList
 }

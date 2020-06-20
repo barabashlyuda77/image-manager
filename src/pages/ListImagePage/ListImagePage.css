@@ -1,0 +1,29 @@
+.gridview {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    border: 1px solid black;
+    border-radius: 4px;
+    background-color: black;
+    gap: 1px;
+}
+
+.gridview div {
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gridview-header {
+    font-weight: 600;
+    padding: 5px 10px;
+}
+
+.gridview-image-container {
+    padding: 10px;
+}
+
+.gridview-image-container img {
+    max-width: 100%;
+    height: auto;
+}

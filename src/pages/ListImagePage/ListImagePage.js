@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import './ListImagePage.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { imageListSelector} from '../../selectors'
-import { getImageList } from '../../actions';
+import { getImageList, removeImage } from '../../actions';
 
 const ListImagePage = () => {
   const imageList = useSelector(imageListSelector)
@@ -13,13 +13,28 @@ const ListImagePage = () => {
     dispatch(getImageList())
   }, [dispatch])
 
+  const removeImageHandler = imageId => {
+    dispatch(removeImage(imageId))
+  }
+
   console.log('imageList', imageList);
   return (
     <>
       <div>ListImagePage</div>
-      {imageList.map(({ id, image }) => (
-        <img key={id} src={image.contents} alt="" height="100" />
-      ))}
+      <div className="gridview">
+        <div className="gridview-header">Image</div>
+        <div className="gridview-header">Actions</div>
+        {imageList.map(({ id, image }) => (
+          <>
+            <div className="gridview-image-container">
+              <img key={id} data-id={id} src={image.contents} alt="" height="100" />
+            </div>
+            <div>
+              <button onClick={() => removeImageHandler(id)}>Remove</button>
+            </div>
+          </>
+        ))}
+      </div>
     </>
   );
 }
