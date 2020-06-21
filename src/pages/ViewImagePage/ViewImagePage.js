@@ -10,12 +10,20 @@ import {
 import './ViewImagePage.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { imageListSelector } from '../../selectors';
+import Tooltip from '../../components/tooltip/Tooltip';
 
 const ViewImagePage = () => {
   const { id: imageId } = useParams();
   const imageList = useSelector(imageListSelector)
-  const image = imageList.find(image => image.id === imageId).image || {}
-  console.log('imageId', imageId, imageList);
+  const imageWithTooltip = imageList.find(image => image.id === imageId)
+
+  if (!imageWithTooltip) {
+    return <div>No image with such id</div>
+  }
+
+  const image = imageWithTooltip.image
+  const { tooltipText, tooltipColor, tooltipPosition } = imageWithTooltip
+  console.log('tooltip', tooltipText, tooltipColor, tooltipPosition);
   
 
   return (
@@ -28,7 +36,13 @@ const ViewImagePage = () => {
         <Link to={`/edit/${imageId}`}>Edit Image</Link>
       </div>
       <div className="view-image">
-        <img src={image.contents} alt="" height="400" />
+        <Tooltip
+          text={tooltipText}
+          color={tooltipColor}
+          position={tooltipPosition}
+        >
+          <img src={image.contents} alt="" height="400" />
+        </Tooltip>
       </div>
     </>
   );

@@ -7,6 +7,6 @@ export const TooltipPosition = {
 
 export const TooltipColor = {
     black: 'black',
-    yellow: 'yellow',
-    gray: 'gray',
+    purple: 'purple',
+    darkblue: 'darkblue',
 }
