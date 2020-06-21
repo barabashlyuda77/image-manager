@@ -7,7 +7,7 @@ import {
   useHistory,
   Link,
 } from 'react-router-dom';
-import './ViewImagePage.css';
+import './ViewImagePage.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { imageListSelector } from '../../selectors';
 
@@ -27,7 +27,7 @@ const ViewImagePage = () => {
       <div className="edit-image-button">
         <Link to={`/edit/${imageId}`}>Edit Image</Link>
       </div>
-      <div className="edit-image">
+      <div className="view-image">
         <img src={image.contents} alt="" height="400" />
       </div>
     </>
