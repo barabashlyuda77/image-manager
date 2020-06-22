@@ -7,7 +7,6 @@ import './AddImagePage.scss';
 import { addImage, updateImage } from '../../actions';
 import { TooltipPosition, TooltipColor } from '../../helpers';
 import { imageListSelector } from '../../selectors';
-import Button from '../../components/button/Button';
 
 const getImageFromFile = file => {
   return new Promise(resolve => {
@@ -52,11 +51,11 @@ const AddImagePage = () => {
       : file
     const imageWithTooltip = {
       image,
-      tooltipText,
-      tooltipPosition,
-      tooltipColor,
+      tooltipText: tooltipText || '',
+      tooltipPosition: tooltipPosition || TooltipPosition.top,
+      tooltipColor: tooltipColor || TooltipColor.black
     }
-    
+
     if (imageId) {
       dispatch(updateImage(imageId, imageWithTooltip))
     } else {
@@ -91,7 +90,7 @@ const AddImagePage = () => {
             <div className="input">
               <input type="text" name="tooltipText" value={props.values.tooltipText} onChange={props.handleChange} required />
             </div>
-            
+
             <div className="input">
               <select name="tooltipPosition" value={props.values.tooltipPosition} onChange={props.handleChange}>
                 {Object.values(TooltipPosition).map(

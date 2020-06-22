@@ -6,7 +6,6 @@ import {
 } from 'react-router-dom';
 
 import AddImagePage from '../../pages/AddImagePage/AddImagePage'
-import EditImagePage from '../../pages/EditImagePage/EditImagePage'
 import ViewImagePage from '../../pages/ViewImagePage/ViewImagePage'
 import ListImagePage from '../../pages/ListImagePage/ListImagePage'
 import './App.css';

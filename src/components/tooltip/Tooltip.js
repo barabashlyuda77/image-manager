@@ -21,7 +21,8 @@ const Tooltip = ({ children, text, color, position }) => {
         const boundingRect = tooltipRef.current.getBoundingClientRect()
         setTooltipWidth(boundingRect.width)
         setTooltipHeight(boundingRect.height)
-    })
+    }, [setTooltipWidth, setTooltipHeight])
+    
     const positionStyleMap = {
         top: {
             top: `-${tooltipHeight}px`
@@ -46,12 +47,12 @@ const Tooltip = ({ children, text, color, position }) => {
     }
 
     return (
-        <div 
+        <div
             className="container"
             onMouseEnter={mouseEnterHandler}
             onMouseLeave={mouseLeaveHandler}
         >
-            <div className={classNames('tooltip-container', position)} 
+            <div className={classNames('tooltip-container', position)}
                  ref={tooltipRef}
                  style={{
                      ...positionStyleMap[position],
