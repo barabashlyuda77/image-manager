@@ -1,5 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Formik } from 'formik';
 import {
   Link, useHistory, useParams
 } from 'react-router-dom';
@@ -7,6 +8,27 @@ import './AddImagePage.css';
 import { addImage, updateImage } from '../../actions';
 import { TooltipPosition, TooltipColor } from '../../helpers';
 import { imageListSelector } from '../../selectors';
+
+const getImageFromFile = file => {
+  return new Promise(resolve => {
+    const readerLoadCallback = () => {
+      // convert image file to base64 string
+      const base64file = reader.result;
+      const {name, size, type} = file
+      const image = {
+        name,
+        size,
+        type,
+        contents: base64file,
+      }
+      resolve(image)
+    }
+
+    const reader = new FileReader();
+    reader.addEventListener('load', readerLoadCallback);
+    reader.readAsDataURL(file);
+  })
+}
 
 const AddImagePage = () => {
   const { id: imageId } = useParams();
@@ -20,23 +42,6 @@ const AddImagePage = () => {
   
   const dispatch = useDispatch()
   const history = useHistory()
-
-  const uploadFileHandler = useCallback((event) => {
-    const file = event.target.files[0]
-    const reader = new FileReader();
-    reader.addEventListener("load", () => {
-      // convert image file to base64 string
-      const base64file = reader.result;
-      const {name, size, type} = file
-      setImage({
-        name,
-        size,
-        type,
-        contents: base64file,
-      })
-    }, false);
-    reader.readAsDataURL(file);
-  }, [setImage])
 
   const tooltipTextHandler = useCallback((event) => {
     setTooltipText(event.target.value)
@@ -55,19 +60,21 @@ const AddImagePage = () => {
     history.push(location)
   }, [history, imageId])
 
-  const submitHandler = () => {
-    const newImage = {
+  const submitHandler = async ({ file, tooltipText, tooltipPosition, tooltipColor }) => {
+    const image = await getImageFromFile(file)
+    const imageWithTooltip = {
       image,
       tooltipText,
       tooltipPosition,
       tooltipColor,
     }
-    console.log(newImage)
+    console.log(imageWithTooltip)
     if (imageId) {
-      dispatch(updateImage(imageId, newImage))
+      dispatch(updateImage(imageId, imageWithTooltip))
     } else {
-      dispatch(addImage(newImage))
+      dispatch(addImage(imageWithTooltip))
     }
+    
     const location = imageId ? `/view/${imageId}` : '/'
     history.push(location)
   }
@@ -79,29 +86,41 @@ const AddImagePage = () => {
       ) : (
         <div>AddImagePage</div>
       )}
-      <form>
-        {imageId ? (
-          <div className="edit-image">
-            <img src={image.contents} alt="" height="400" />
-          </div>
-        ) : (
-          <input type="file" onChange={uploadFileHandler} required />
+      <Formik
+        initialValues={{ tooltipText, tooltipPosition, tooltipColor, file: '' }}
+        onSubmit={submitHandler}
+      >
+        {props => (
+          <form onSubmit={props.handleSubmit}>
+            {imageId ? (
+              <div className="edit-image">
+                <img src={image.contents} alt="" height="400" />
+              </div>
+            ) : (
+              <input type="file" name="file" onChange={event => {
+                props.setFieldValue('file', event.target.files[0])
+              }} required />
+            )}
+            {props.errors.file && <div className="form-error">{props.errors.file}</div>}
+            <input type="text" name="tooltipText" onChange={props.handleChange} />
+            {props.errors.tooltipText && <div className="form-error">{props.errors.tooltipText}</div>}
+            <select name="tooltipPosition" onChange={props.handleChange}>
+              {Object.values(TooltipPosition).map(
+                value => <option key={value} value={value}>{value}</option>
+              )}
+            </select>
+            {props.errors.tooltipPosition && <div className="form-error">{props.errors.tooltipPosition}</div>}
+            <select name="tooltipColor" onChange={props.handleChange}>
+              {Object.values(TooltipColor).map(
+                value => <option key={value} value={value}>{value}</option>
+              )}
+            </select>
+            {props.errors.tooltipColor && <div className="form-error">{props.errors.tooltipColor}</div>}
+            <input type="submit" value="Submit" />
+            <input type="button" value="Cancel" onClick={cancelHandler} />
+          </form>
         )}
-        <input type="text" value={tooltipText} onChange={tooltipTextHandler} />
-        <select value={tooltipPosition} onChange={tooltipPositionHandler}>
-          {Object.values(TooltipPosition).map(
-            value => <option key={value} value={value}>{value}</option>
-          )}
-        </select>
-        <select value={tooltipColor} onChange={tooltipColorHandler}>
-          {Object.values(TooltipColor).map(
-            value => <option key={value} value={value}>{value}</option>
-          )}
-        </select>
-        <input type="submit" value="Submit" onClick={submitHandler} />
-        <input type="button" value="Cancel" onClick={cancelHandler} />
-      </form>
-      {/* {imageUrl && <img src={imageUrl} height="100" alt="" />} */}
+      </Formik>
     </>
   );
 }
