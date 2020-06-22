@@ -23,12 +23,10 @@ const ViewImagePage = () => {
 
   const image = imageWithTooltip.image
   const { tooltipText, tooltipColor, tooltipPosition } = imageWithTooltip
-  console.log('tooltip', tooltipText, tooltipColor, tooltipPosition);
-  
 
   return (
     <>
-      <div>ViewImagePage</div>
+      <h1>ViewImagePage</h1>
       <div className="back-button">
         <Link to={`/`}>Back</Link>
       </div>

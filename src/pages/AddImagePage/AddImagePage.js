@@ -31,29 +31,15 @@ const getImageFromFile = file => {
 }
 
 const AddImagePage = () => {
-  const { id: imageId } = useParams();
-  const imageList = useSelector(imageListSelector)
-  const selectedImage = imageList.find(image => image.id === imageId) || {}
-
-  const [image, setImage] = useState(selectedImage.image)
-  const [tooltipText, setTooltipText] = useState(selectedImage.tooltipText || '')
-  const [tooltipPosition, setTooltipPosition] = useState(selectedImage.tooltipPosition || TooltipPosition.top)
-  const [tooltipColor, setTooltipColor] = useState(selectedImage.tooltipColor || TooltipColor.black)
-  
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const tooltipTextHandler = useCallback((event) => {
-    setTooltipText(event.target.value)
-  }, [setTooltipText])
+  const { id: imageId } = useParams();
+  const imageList = useSelector(imageListSelector)
+  const selectedImage = imageList.find(image => image.id === imageId) || {}
+  const { image, tooltipText, tooltipPosition, tooltipColor } = selectedImage
 
-  const tooltipPositionHandler = useCallback((event) => {
-    setTooltipPosition(event.target.value)
-  }, [setTooltipPosition])
-
-  const tooltipColorHandler = useCallback((event) => {
-    setTooltipColor(event.target.value)
-  }, [setTooltipColor])
+  const pageTitle = imageId ? 'EditImagePage' : 'AddImagePage'
 
   const cancelHandler = useCallback((event) => {
     const location = imageId ? `/view/${imageId}` : '/'
@@ -61,33 +47,31 @@ const AddImagePage = () => {
   }, [history, imageId])
 
   const submitHandler = async ({ file, tooltipText, tooltipPosition, tooltipColor }) => {
-    const image = await getImageFromFile(file)
+    const image = file instanceof File
+      ? await getImageFromFile(file)
+      : file
     const imageWithTooltip = {
       image,
       tooltipText,
       tooltipPosition,
       tooltipColor,
     }
-    console.log(imageWithTooltip)
+    
     if (imageId) {
       dispatch(updateImage(imageId, imageWithTooltip))
     } else {
       dispatch(addImage(imageWithTooltip))
     }
-    
+
     const location = imageId ? `/view/${imageId}` : '/'
     history.push(location)
   }
 
   return (
     <>
-      {imageId ? (
-        <div>EditImagePage</div>
-      ) : (
-        <div>AddImagePage</div>
-      )}
+      <h1>{pageTitle}</h1>
       <Formik
-        initialValues={{ tooltipText, tooltipPosition, tooltipColor, file: '' }}
+        initialValues={{ tooltipText, tooltipPosition, tooltipColor, file: image }}
         onSubmit={submitHandler}
       >
         {props => (
@@ -101,21 +85,17 @@ const AddImagePage = () => {
                 props.setFieldValue('file', event.target.files[0])
               }} required />
             )}
-            {props.errors.file && <div className="form-error">{props.errors.file}</div>}
-            <input type="text" name="tooltipText" onChange={props.handleChange} />
-            {props.errors.tooltipText && <div className="form-error">{props.errors.tooltipText}</div>}
-            <select name="tooltipPosition" onChange={props.handleChange}>
+            <input type="text" name="tooltipText" value={props.values.tooltipText} onChange={props.handleChange} />
+            <select name="tooltipPosition" value={props.values.tooltipPosition} onChange={props.handleChange}>
               {Object.values(TooltipPosition).map(
                 value => <option key={value} value={value}>{value}</option>
               )}
             </select>
-            {props.errors.tooltipPosition && <div className="form-error">{props.errors.tooltipPosition}</div>}
-            <select name="tooltipColor" onChange={props.handleChange}>
+            <select name="tooltipColor" value={props.values.tooltipColor} onChange={props.handleChange}>
               {Object.values(TooltipColor).map(
                 value => <option key={value} value={value}>{value}</option>
               )}
             </select>
-            {props.errors.tooltipColor && <div className="form-error">{props.errors.tooltipColor}</div>}
             <input type="submit" value="Submit" />
             <input type="button" value="Cancel" onClick={cancelHandler} />
           </form>

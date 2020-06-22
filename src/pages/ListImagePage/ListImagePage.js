@@ -7,7 +7,6 @@ import { getImageList, removeImage } from '../../actions';
 
 const ListImagePage = () => {
   const imageList = useSelector(imageListSelector)
-  console.log('imageList', imageList)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -20,7 +19,7 @@ const ListImagePage = () => {
 
   return (
     <>
-      <div>ListImagePage</div>
+      <h1>ListImagePage</h1>
       <div className="add-image-button">
         <Link to="/add">Add Image</Link>
       </div>

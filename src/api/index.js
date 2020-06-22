@@ -9,9 +9,6 @@ export const apiGetImageList = () => {
 }
 
 export const apiSaveNewImage = ({ image, tooltipText, tooltipPosition, tooltipColor }) => {
-    /* eslint-disable no-console */
-    console.log('data', image);
-    
     const imageList = apiGetImageList()
     const imageId = uuid()
     const newImage = {
@@ -35,9 +32,6 @@ export const apiRemoveImage = imageId => {
 }
 
 export const apiReplaceImage = (imageId, { image, tooltipText, tooltipPosition, tooltipColor }) => {
-    /* eslint-disable no-console */
-    console.log('data', imageId, image);
-
     const newImageList = apiGetImageList()
         .map(item => {
             return item.id !== imageId

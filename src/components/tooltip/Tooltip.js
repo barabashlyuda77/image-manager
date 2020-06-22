@@ -15,8 +15,6 @@ const Tooltip = ({ children, text, color, position }) => {
         left: 'arrow-right',
         right: 'arrow-left',
     }
-    console.log(TooltipColor, color);
-    
     const arrowPosition = arrowPositionMap[position] || arrowPositionMap.down
 
     useEffect(() => {
