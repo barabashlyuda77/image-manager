@@ -47,7 +47,7 @@ const Tooltip = ({ children, text, color, position }) => {
 
     return (
         <div 
-            className="image-container"
+            className="container"
             onMouseEnter={mouseEnterHandler}
             onMouseLeave={mouseLeaveHandler}
         >

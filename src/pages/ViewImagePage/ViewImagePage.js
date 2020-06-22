@@ -11,6 +11,7 @@ import './ViewImagePage.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { imageListSelector } from '../../selectors';
 import Tooltip from '../../components/tooltip/Tooltip';
+import LinkButton from '../../components/link-button/LinkButton';
 
 const ViewImagePage = () => {
   const { id: imageId } = useParams();
@@ -28,10 +29,10 @@ const ViewImagePage = () => {
     <>
       <h1>ViewImagePage</h1>
       <div className="back-button">
-        <Link to={`/`}>Back</Link>
+        <LinkButton to={`/`}>Back</LinkButton>
       </div>
       <div className="edit-image-button">
-        <Link to={`/edit/${imageId}`}>Edit Image</Link>
+        <LinkButton to={`/edit/${imageId}`}>Edit Image</LinkButton>
       </div>
       <div className="view-image">
         <Tooltip

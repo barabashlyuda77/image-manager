@@ -1,13 +1,10 @@
-.image-container {
+.container {
     display: flex;
     justify-content: center;
-    align-items: center;
     position: relative;
-    width: 70%;
 
-    img {
-        width: 100%;
-        height: auto;
+    @media (min-width: 800px) {
+        align-items: center;
     }
 }
 

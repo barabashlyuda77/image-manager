@@ -1,6 +1,32 @@
 .view-image {
-    flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    position: relative;
+    padding-top: 30px;
+
+    @media (min-width: 800px) {
+        flex: 1;
+        align-items: center;
+        width: 60%;
+        margin: 0 auto;
+    }
+
+    img {
+        width: 100%;
+        height: auto;
+    }
+}
+
+.back-button {
+    @media (min-width: 800px) {
+        margin-left: 0;
+        margin-right: auto;
+    }
+}
+
+.edit-image-button {
+    @media (min-width: 800px) {
+        margin-left: 0;
+        margin-right: auto;
+    }
 }

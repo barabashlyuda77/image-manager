@@ -25,7 +25,9 @@ const ListImagePage = () => {
   return (
     <>
       <h1>ListImagePage</h1>
-      <LinkButton to="/add">Add Image</LinkButton>
+      <div className="add-image-button">
+        <LinkButton to="/add">Add Image</LinkButton>
+      </div>
       <div className="gridview">
         <div className="cell gridview-header">Image</div>
         <div className="cell gridview-header">Actions</div>
@@ -36,7 +38,7 @@ const ListImagePage = () => {
                 <img key={id} data-id={id} src={image.contents} alt="" height="100" />
               </Link>
             </div>
-            <div className="cell">
+            <div className="cell actions">
               <Button onClick={() => removeImageHandler(id)}>Remove</Button>
             </div>
           </>
