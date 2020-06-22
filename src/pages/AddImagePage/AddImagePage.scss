@@ -1,0 +1,51 @@
+.input {
+    margin: 20px 0;
+
+    input {
+        width: 100%;
+        border: 1px solid black;
+        border-radius: 4px;
+        padding: 10px;
+        outline-color: blue;
+    }
+
+    select {
+        width: 100%;
+        border: 1px solid black;
+        border-radius: 4px;
+        padding: 10px;
+    }
+
+    @media (min-width: 800px) {
+        input[type="file"] {
+            border: none;
+        }
+    }
+}
+
+.edit-image {
+    width: 100%;
+    
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 4px;
+    }
+}
+
+@media (min-width: 800px) {
+    form {
+        margin: 0 auto;
+        width: 500px;
+    }
+    
+    .buttons {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+
+        .input {
+            margin-left: 10px;
+        }
+    }
+}

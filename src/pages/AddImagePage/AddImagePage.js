@@ -1,13 +1,13 @@
-import React, { useState, useCallback } from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
-import {
-  Link, useHistory, useParams
-} from 'react-router-dom';
-import './AddImagePage.css';
+import { useHistory, useParams } from 'react-router-dom';
+
+import './AddImagePage.scss';
 import { addImage, updateImage } from '../../actions';
 import { TooltipPosition, TooltipColor } from '../../helpers';
 import { imageListSelector } from '../../selectors';
+import Button from '../../components/button/Button';
 
 const getImageFromFile = file => {
   return new Promise(resolve => {
@@ -81,23 +81,42 @@ const AddImagePage = () => {
                 <img src={image.contents} alt="" height="400" />
               </div>
             ) : (
-              <input type="file" name="file" onChange={event => {
+              <div className="input">
+                <input type="file" name="file" onChange={event => {
                 props.setFieldValue('file', event.target.files[0])
               }} required />
+              </div>
             )}
-            <input type="text" name="tooltipText" value={props.values.tooltipText} onChange={props.handleChange} />
-            <select name="tooltipPosition" value={props.values.tooltipPosition} onChange={props.handleChange}>
-              {Object.values(TooltipPosition).map(
-                value => <option key={value} value={value}>{value}</option>
-              )}
-            </select>
-            <select name="tooltipColor" value={props.values.tooltipColor} onChange={props.handleChange}>
-              {Object.values(TooltipColor).map(
-                value => <option key={value} value={value}>{value}</option>
-              )}
-            </select>
-            <input type="submit" value="Submit" />
-            <input type="button" value="Cancel" onClick={cancelHandler} />
+
+            <div className="input">
+              <input type="text" name="tooltipText" value={props.values.tooltipText} onChange={props.handleChange} required />
+            </div>
+            
+            <div className="input">
+              <select name="tooltipPosition" value={props.values.tooltipPosition} onChange={props.handleChange}>
+                {Object.values(TooltipPosition).map(
+                  value => <option key={value} value={value}>{value}</option>
+                )}
+              </select>
+            </div>
+
+            <div className="input">
+              <select name="tooltipColor" value={props.values.tooltipColor} onChange={props.handleChange}>
+                {Object.values(TooltipColor).map(
+                  value => <option key={value} value={value}>{value}</option>
+                )}
+              </select>
+            </div>
+
+            <div className="buttons">
+              <div className="input">
+                <input type="submit" value="Submit" />
+              </div>
+
+              <div className="input">
+                <input type="button" value="Cancel" onClick={cancelHandler} />
+              </div>
+            </div>
           </form>
         )}
       </Formik>
