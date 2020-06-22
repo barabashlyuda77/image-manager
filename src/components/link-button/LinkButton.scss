@@ -1,0 +1,15 @@
+.link-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: darkslateblue;
+    padding: 5px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+
+    a {
+        font-size: 14px;
+        text-decoration: none;
+        color: #ddd;
+    }
+}
