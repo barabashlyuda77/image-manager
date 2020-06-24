@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './ListImagePage.scss';
-
 import { useSelector, useDispatch } from 'react-redux';
+
 import { imageListSelector} from '../../selectors'
 import { getImageList, removeImage } from '../../actions';
 import Button from '../../components/button/Button';
 import LinkButton from '../../components/link-button/LinkButton';
+import './ListImagePage.scss';
 
 const ListImagePage = () => {
   const imageList = useSelector(imageListSelector)

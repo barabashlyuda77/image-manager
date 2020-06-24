@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Formik } from 'formik';
 import { useHistory, useParams } from 'react-router-dom';
 
-import './AddImagePage.scss';
 import { addImage, updateImage } from '../../actions';
 import { TooltipPosition, TooltipColor } from '../../helpers';
 import { imageListSelector } from '../../selectors';
+import './AddImagePage.scss';
 
 const getImageFromFile = file => {
   return new Promise(resolve => {
@@ -32,7 +32,6 @@ const getImageFromFile = file => {
 const AddImagePage = () => {
   const dispatch = useDispatch()
   const history = useHistory()
-
   const { id: imageId } = useParams();
   const imageList = useSelector(imageListSelector)
   const selectedImage = imageList.find(image => image.id === imageId) || {}
