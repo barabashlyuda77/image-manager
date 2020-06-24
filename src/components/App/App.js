@@ -3,12 +3,12 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-} from 'react-router-dom';
+} from 'react-router-dom'
 
 import AddImagePage from '../../pages/AddImagePage/AddImagePage'
 import ViewImagePage from '../../pages/ViewImagePage/ViewImagePage'
 import ListImagePage from '../../pages/ListImagePage/ListImagePage'
-import './App.css';
+import './App.css'
 
 const App = () => {
   return (
@@ -31,4 +31,4 @@ const App = () => {
   );
 }
 
-export default App;
+export default App

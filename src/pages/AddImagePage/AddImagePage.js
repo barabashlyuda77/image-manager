@@ -1,12 +1,13 @@
-import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Formik } from 'formik';
-import { useHistory, useParams } from 'react-router-dom';
+import React, { useCallback } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { Formik } from 'formik'
+import { useHistory, useParams } from 'react-router-dom'
 
-import { addImage, updateImage } from '../../actions';
-import { TooltipPosition, TooltipColor } from '../../helpers';
-import { imageListSelector } from '../../selectors';
-import './AddImagePage.scss';
+import { addImage, updateImage } from '../../actions'
+import { TooltipPosition, TooltipColor } from '../../helpers'
+import { imageListSelector } from '../../selectors'
+import ToolipSelect from '../../components/toolipSelect/ToolipSelect'
+import './AddImagePage.scss'
 
 const getImageFromFile = file => {
   return new Promise(resolve => {
@@ -91,19 +92,21 @@ const AddImagePage = () => {
             </div>
 
             <div className="input">
-              <select name="tooltipPosition" value={props.values.tooltipPosition} onChange={props.handleChange}>
-                {Object.values(TooltipPosition).map(
-                  value => <option key={value} value={value}>{value}</option>
-                )}
-              </select>
+              <ToolipSelect
+                name="tooltipPosition"
+                value={props.values.tooltipPosition}
+                onChange={props.handleChange}
+                selectValues={TooltipPosition}
+              />
             </div>
 
             <div className="input">
-              <select name="tooltipColor" value={props.values.tooltipColor} onChange={props.handleChange}>
-                {Object.values(TooltipColor).map(
-                  value => <option key={value} value={value}>{value}</option>
-                )}
-              </select>
+              <ToolipSelect
+                name="tooltipColor"
+                value={props.values.tooltipColor}
+                onChange={props.handleChange}
+                selectValues={TooltipColor}
+              />
             </div>
 
             <div className="buttons">
@@ -122,4 +125,4 @@ const AddImagePage = () => {
   );
 }
 
-export default AddImagePage;
+export default AddImagePage

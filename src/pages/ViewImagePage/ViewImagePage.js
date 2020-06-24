@@ -1,11 +1,11 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
-import { imageListSelector } from '../../selectors';
-import Tooltip from '../../components/tooltip/Tooltip';
-import LinkButton from '../../components/link-button/LinkButton';
-import './ViewImagePage.scss';
+import { imageListSelector } from '../../selectors'
+import Tooltip from '../../components/tooltip/Tooltip'
+import LinkButton from '../../components/link-button/LinkButton'
+import './ViewImagePage.scss'
 
 const ViewImagePage = () => {
   const { id: imageId } = useParams();
@@ -41,4 +41,4 @@ const ViewImagePage = () => {
   );
 }
 
-export default ViewImagePage;
+export default ViewImagePage
